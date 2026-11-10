@@ -44,18 +44,21 @@ class User {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE phone = ?");
         $stmt->bind_param("s", $this->phone);
         $stmt->execute();
+
         $result = $stmt->get_result();
         $this->data = $result->fetch_assoc();
     }
 
     public function isRegistered() {
         return $this->data !== null;
+
     }
 
     public function register($name, $pin) {
         $stmt = $this->db->prepare("INSERT INTO users (phone, name, pin) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $this->phone, $name, $pin);
         return $stmt->execute();
+        
     }
 
     public function update($field, $value) {
